@@ -56,6 +56,14 @@ module.exports = [
     "clobbers": [
       "navigator.prompt"
     ]
+  },
+  {
+    "id": "cordova-plugin-setting.SettingPlugin",
+    "file": "plugins/cordova-plugin-setting/www/SettingPlugin.js",
+    "pluginId": "cordova-plugin-setting",
+    "clobbers": [
+      "navigator.setting"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -64,7 +72,8 @@ module.exports.metadata =
   "cordova-plugin-whitelist": "1.3.3",
   "cordova-plugin-camera": "4.0.3",
   "cordova-plugin-network-information": "2.0.1",
-  "cordova-plugin-prompt": "1.0.0"
+  "cordova-plugin-prompt": "1.0.0",
+  "cordova-plugin-setting": "1.0.0"
 };
 // BOTTOM OF METADATA
 });

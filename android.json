@@ -23,6 +23,10 @@
             {
               "xml": "<feature name=\"PromptPlugin\"><param name=\"android-package\" value=\"org.apache.cordova.prompt.PromptPlugin\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"SettingPlugin\"><param name=\"android-package\" value=\"org.apache.cordova.setting.SettingPlugin\" /></feature>",
+              "count": 1
             }
           ]
         }
@@ -60,6 +64,9 @@
       "PACKAGE_NAME": "com.efeiyi.bigwiki"
     },
     "cordova-plugin-prompt": {
+      "PACKAGE_NAME": "com.efeiyi.bigwiki"
+    },
+    "cordova-plugin-setting": {
       "PACKAGE_NAME": "com.efeiyi.bigwiki"
     }
   },
@@ -121,12 +128,21 @@
       "clobbers": [
         "navigator.prompt"
       ]
+    },
+    {
+      "id": "cordova-plugin-setting.SettingPlugin",
+      "file": "plugins/cordova-plugin-setting/www/SettingPlugin.js",
+      "pluginId": "cordova-plugin-setting",
+      "clobbers": [
+        "navigator.setting"
+      ]
     }
   ],
   "plugin_metadata": {
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-network-information": "2.0.1",
-    "cordova-plugin-prompt": "1.0.0"
+    "cordova-plugin-prompt": "1.0.0",
+    "cordova-plugin-setting": "1.0.0"
   }
 }

@@ -4,6 +4,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.efeiyi.bigwiki.utils.ActionUtils;
 import com.efeiyi.bigwiki.utils.LogUtils;
 
 import org.apache.cordova.CordovaPlugin;
@@ -19,10 +20,8 @@ import org.json.JSONObject;
 public class PromptPlugin extends CordovaPlugin {
 
 
-    public static final  String TAG = PromptPlugin.class.getSimpleName();
-    public static String SHOW_TOAST = "showToast";
-    public static String SHOW_DIALOG = "showDialog";
-    public static String SHOW_DIALOG_CLICK = "showOnClickDialog";
+    public static final String TAG = PromptPlugin.class.getSimpleName();
+
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -32,18 +31,18 @@ public class PromptPlugin extends CordovaPlugin {
 //            return true;
 //        }
 
-          if(action.equals(SHOW_TOAST)) {
-              showToast(args,callbackContext);
-               return true;
-          }
+        if (action.equals(ActionUtils.ACTION_SHOW_TOAST)) {
+            showToast(args, callbackContext);
+            return true;
+        }
 
-          if(action.equals(SHOW_DIALOG)) {
-              showDialog(args,callbackContext);
-              return true;
-          }
+        if (action.equals(ActionUtils.ACTION_SHOW_DIALOG)) {
+            showDialog(args, callbackContext);
+            return true;
+        }
 
-        if (action.equals(SHOW_DIALOG_CLICK)) {
-            showOnClickDialog(args,callbackContext);
+        if (action.equals(ActionUtils.ACTION_SHOW_DIALOG_CLICK)) {
+            showOnClickDialog(args, callbackContext);
         }
 
 
@@ -52,6 +51,7 @@ public class PromptPlugin extends CordovaPlugin {
 
     /**
      * 支持结果回调的dialog
+     *
      * @param args
      * @param callbackContext
      */
@@ -62,6 +62,7 @@ public class PromptPlugin extends CordovaPlugin {
 
     /**
      * 不带结果回调的dialog
+     *
      * @param args
      * @param callbackContext
      */
@@ -71,12 +72,12 @@ public class PromptPlugin extends CordovaPlugin {
         LogUtils.d(TAG, "title: " + title + " message : " + message);
         if (title != null && title.length() > 0) {
             callbackContext.success();
-           // AlertDialog dialog = new AlertDialog.Builder(cordova.getContext());
+            // AlertDialog dialog = new AlertDialog.Builder(cordova.getContext());
             AlertDialog.Builder dialog = new AlertDialog.Builder(cordova.getActivity());
 
             dialog.setTitle(title)
                     .setMessage(message)
-                    .setPositiveButton("确定",null)
+                    .setPositiveButton("确定", null)
                     .show();
         } else {
             callbackContext.error("Expected , one non-empty string , argument");
@@ -88,9 +89,9 @@ public class PromptPlugin extends CordovaPlugin {
     private void showToast(JSONArray args, CallbackContext callbackContext) throws JSONException {
         String msg = args.getString(0);
         if (msg != null && msg.length() > 0) {
-            LogUtils.d(TAG,"");
+            LogUtils.d(TAG, "");
             callbackContext.success(msg);
-            Toast.makeText(cordova.getActivity(),msg,Toast.LENGTH_LONG).show();
+            Toast.makeText(cordova.getActivity(), msg, Toast.LENGTH_LONG).show();
         } else {
             callbackContext.error("Expected, one non-empty  string, argument");
         }

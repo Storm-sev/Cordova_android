@@ -30,4 +30,7 @@
     <feature name="PromptPlugin">
         <param name="android-package" value="org.apache.cordova.prompt.PromptPlugin" />
     </feature>
+    <feature name="SettingPlugin">
+        <param name="android-package" value="org.apache.cordova.setting.SettingPlugin" />
+    </feature>
 </widget>
