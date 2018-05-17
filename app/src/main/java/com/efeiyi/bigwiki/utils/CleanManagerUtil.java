@@ -2,12 +2,10 @@ package com.efeiyi.bigwiki.utils;
 
 import android.content.Context;
 import android.os.Environment;
-import android.widget.CursorTreeAdapter;
 
-import com.efeiyi.bigwiki.app.MyApplication;
+import com.efeiyi.bigwiki.app.MApplication;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.math.BigDecimal;
 
 /**
@@ -22,7 +20,7 @@ public class CleanManagerUtil {
 
     public static Context getContext() {
 
-        return MyApplication.getAppContext();
+        return MApplication.getAppContext();
     }
 
 

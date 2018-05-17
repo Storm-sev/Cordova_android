@@ -4,7 +4,7 @@
             "outputFile": "/Users/stormzhang/stormworking/workplace/BigWiki/platforms/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-land/values-land.xml",
             "map": [
                 {
-                    "source": "/Users/stormzhang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/01e2a8654d36751fd61cf7ad551b3a45/res/values-land/values-land.xml",
+                    "source": "/Users/stormzhang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/0b02881b8e3ac9ecf7630fa20e241a1b/res/values-land/values-land.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",

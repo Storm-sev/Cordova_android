@@ -4,7 +4,7 @@
             "outputFile": "/Users/stormzhang/stormworking/workplace/BigWiki/platforms/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v12/values-v12.xml",
             "map": [
                 {
-                    "source": "/Users/stormzhang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/01e2a8654d36751fd61cf7ad551b3a45/res/values-v12/values-v12.xml",
+                    "source": "/Users/stormzhang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/0b02881b8e3ac9ecf7630fa20e241a1b/res/values-v12/values-v12.xml",
                     "from": {
                         "startLines": "2,5,8,9",
                         "startColumns": "4,4,4,4",
