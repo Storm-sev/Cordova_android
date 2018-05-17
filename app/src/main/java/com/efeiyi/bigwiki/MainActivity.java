@@ -20,6 +20,8 @@
 package com.efeiyi.bigwiki;
 
 import android.os.Bundle;
+import android.webkit.WebView;
+
 import org.apache.cordova.*;
 
 import java.io.FileReader;
@@ -38,9 +40,20 @@ public class MainActivity extends CordovaActivity {
             moveTaskToBack(true);
         }
 
-
         // Set by <content src="index.html" /> in config.xml
         loadUrl("file:///android_asset/www/home.html");
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
 
     }
 }
