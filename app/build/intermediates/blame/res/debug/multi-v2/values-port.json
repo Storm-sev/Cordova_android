@@ -4,7 +4,7 @@
             "outputFile": "/Users/stormzhang/stormworking/workplace/BigWiki/platforms/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-port/values-port.xml",
             "map": [
                 {
-                    "source": "/Users/stormzhang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/0b02881b8e3ac9ecf7630fa20e241a1b/res/values-port/values-port.xml",
+                    "source": "/Users/stormzhang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/f63876b78320465859c472dd0b579ea4/res/values-port/values-port.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

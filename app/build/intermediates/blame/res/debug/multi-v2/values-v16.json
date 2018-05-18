@@ -4,7 +4,17 @@
             "outputFile": "/Users/stormzhang/stormworking/workplace/BigWiki/platforms/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "/Users/stormzhang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/0b02881b8e3ac9ecf7630fa20e241a1b/res/values-v16/values-v16.xml",
+                    "source": "/Users/stormzhang/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/4e02063e59bed1beadf6c936b43ad0fe/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                },
+                {
+                    "source": "/Users/stormzhang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/f63876b78320465859c472dd0b579ea4/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -20,16 +30,6 @@
                         "endLines": "6",
                         "endColumns": "12",
                         "endOffsets": "289"
-                    }
-                },
-                {
-                    "source": "/Users/stormzhang/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/49199bd40de35a1e2926420513662f24/res/values-v16/values-v16.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "65",
-                        "endOffsets": "116"
                     }
                 }
             ]
