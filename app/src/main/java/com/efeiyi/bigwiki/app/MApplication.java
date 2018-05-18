@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.efeiyi.bigwiki.BuildConfig;
 import com.efeiyi.bigwiki.utils.LogUtils;
+import com.meituan.android.walle.WalleChannelReader;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -41,11 +43,19 @@ public class MApplication extends Application {
      *
      */
     private void initUmeng() {
+        // 友盟统计
 
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
 
         UMConfigure.setLogEnabled(true);
-        UMConfigure.init(this, "5afd4b20f43e4807a9000197", "umeng", UMConfigure.DEVICE_TYPE_PHONE,
+
+        String channel = WalleChannelReader.getChannel(this);
+        LogUtils.d(TAG, "获取的渠道信息" + channel);
+
+        UMConfigure.init(this, "5afd4b20f43e4807a9000197", channel, UMConfigure.DEVICE_TYPE_PHONE,
                 "73c70b5ae640fedb5a5be029e0561257");
+
+
 
 
         mPushAgent = PushAgent.getInstance(this);

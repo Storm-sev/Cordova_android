@@ -19,6 +19,7 @@ MERGED from [:CordovaLib] /Users/stormzhang/stormworking/workplace/BigWiki/platf
 MERGED from [com.android.support:appcompat-v7:26.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/f63876b78320465859c472dd0b579ea4/AndroidManifest.xml:17:1-31:12
 MERGED from [com.android.support:support-v4:26.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/support-v4-26.1.0.aar/5b6e757537f686a738d90761dd8084e3/AndroidManifest.xml:17:1-31:12
 MERGED from [com.umeng.sdk:push:4.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/push-4.1.0.aar/9115cfaa0cd10aeb146822dad3119f5e/AndroidManifest.xml:2:1-165:12
+MERGED from [com.meituan.android.walle:library:1.1.6] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/library-1.1.6.aar/5ad95c10fd493828b8d119ed7fd03c68/AndroidManifest.xml:2:1-13:12
 MERGED from [com.android.support:animated-vector-drawable:26.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.1.0.aar/044dc8f2838c5e25ff2b3bb0188577e9/AndroidManifest.xml:17:1-28:12
 MERGED from [com.android.support:support-vector-drawable:26.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.1.0.aar/ae8561636a43c65dbc735f8121b09e4b/AndroidManifest.xml:17:1-28:12
 MERGED from [com.android.support:support-fragment:26.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/support-fragment-26.1.0.aar/02d816c375b13e1f12647ad1654acb27/AndroidManifest.xml:17:1-31:12
@@ -126,6 +127,8 @@ MERGED from [com.android.support:support-v4:26.1.0] /Users/stormzhang/.gradle/ca
 MERGED from [com.android.support:support-v4:26.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/support-v4-26.1.0.aar/5b6e757537f686a738d90761dd8084e3/AndroidManifest.xml:25:5-29:19
 MERGED from [com.umeng.sdk:push:4.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/push-4.1.0.aar/9115cfaa0cd10aeb146822dad3119f5e/AndroidManifest.xml:27:5-163:19
 MERGED from [com.umeng.sdk:push:4.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/push-4.1.0.aar/9115cfaa0cd10aeb146822dad3119f5e/AndroidManifest.xml:27:5-163:19
+MERGED from [com.meituan.android.walle:library:1.1.6] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/library-1.1.6.aar/5ad95c10fd493828b8d119ed7fd03c68/AndroidManifest.xml:10:5-11:19
+MERGED from [com.meituan.android.walle:library:1.1.6] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/library-1.1.6.aar/5ad95c10fd493828b8d119ed7fd03c68/AndroidManifest.xml:10:5-11:19
 MERGED from [com.android.support:animated-vector-drawable:26.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.1.0.aar/044dc8f2838c5e25ff2b3bb0188577e9/AndroidManifest.xml:22:5-26:19
 MERGED from [com.android.support:animated-vector-drawable:26.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.1.0.aar/044dc8f2838c5e25ff2b3bb0188577e9/AndroidManifest.xml:22:5-26:19
 MERGED from [com.android.support:support-vector-drawable:26.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.1.0.aar/ae8561636a43c65dbc735f8121b09e4b/AndroidManifest.xml:22:5-26:19
@@ -188,6 +191,8 @@ MERGED from [com.android.support:support-v4:26.1.0] /Users/stormzhang/.gradle/ca
 MERGED from [com.android.support:support-v4:26.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/support-v4-26.1.0.aar/5b6e757537f686a738d90761dd8084e3/AndroidManifest.xml:21:5-23:54
 MERGED from [com.umeng.sdk:push:4.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/push-4.1.0.aar/9115cfaa0cd10aeb146822dad3119f5e/AndroidManifest.xml:7:5-9:41
 MERGED from [com.umeng.sdk:push:4.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/push-4.1.0.aar/9115cfaa0cd10aeb146822dad3119f5e/AndroidManifest.xml:7:5-9:41
+MERGED from [com.meituan.android.walle:library:1.1.6] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/library-1.1.6.aar/5ad95c10fd493828b8d119ed7fd03c68/AndroidManifest.xml:6:5-8:41
+MERGED from [com.meituan.android.walle:library:1.1.6] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/library-1.1.6.aar/5ad95c10fd493828b8d119ed7fd03c68/AndroidManifest.xml:6:5-8:41
 MERGED from [com.android.support:animated-vector-drawable:26.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.1.0.aar/044dc8f2838c5e25ff2b3bb0188577e9/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:animated-vector-drawable:26.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.1.0.aar/044dc8f2838c5e25ff2b3bb0188577e9/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-vector-drawable:26.1.0] /Users/stormzhang/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.1.0.aar/ae8561636a43c65dbc735f8121b09e4b/AndroidManifest.xml:20:5-44

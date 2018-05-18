@@ -171,10 +171,10 @@ android {
 //-----------
     signingConfigs{
         release{
-            storeFile file("/Users/stormzhang/stormworking/sign/storm.keystore")
-            storePassword "storm0051"
-            keyAlias "storm"
-            keyPassword "storm0051"
+            storeFile file("/Users/stormzhang/stormworking/sign/bigwiki.jks")
+            storePassword "yxhy2018"
+            keyAlias "yxhy"
+            keyPassword "yxhy2018"
         }
     }
 
@@ -269,6 +269,17 @@ android {
     }
 }
 
+//walle
+
+walle {
+    apkOutputFolder = new File("${project.buildDir}/outputs/channels")
+    apkFileNameFormat = '${appName}-${packageName}-${channel}-${buildType}-v${versionName}-${versionCode}-${buildTime}-${flavorName}.apk'
+    //configFile与channelFile两者必须存在一个，否则无法生成渠道包。两者都存在时优先执行configFile
+    channelFile = new File("${project.getProjectDir()}/channel")
+    //configFile = new File("${project.getProjectDir()}/config.json")
+}
+
+
 /*
  * WARNING: Cordova Lib and platform scripts do management inside of this code here,
  * if you are adding the dependencies manually, do so outside the comments, otherwise
@@ -289,6 +300,10 @@ dependencies {
     implementation 'com.umeng.sdk:utdid:1.1.5.3'
 //PushSDK
     implementation 'com.umeng.sdk:push:4.1.0'
+
+    implementation 'com.umeng.sdk:analytics:7.5.0'
+
+    implementation 'com.meituan.android.walle:library:1.1.6'
 
 
 }

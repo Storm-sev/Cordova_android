@@ -22,6 +22,9 @@ package com.efeiyi.bigwiki;
 import android.os.Bundle;
 import android.webkit.WebView;
 
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
+
 import org.apache.cordova.*;
 
 import java.io.FileReader;
@@ -42,6 +45,7 @@ public class MainActivity extends CordovaActivity {
 
         // Set by <content src="index.html" /> in config.xml
         loadUrl("file:///android_asset/www/home.html");
+        PushAgent.getInstance(this).onAppStart();
 
     }
 
@@ -49,11 +53,15 @@ public class MainActivity extends CordovaActivity {
     protected void onResume() {
         super.onResume();
 
+        MobclickAgent.onResume(this);
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
+        MobclickAgent.onPause(this);
 
     }
 }
