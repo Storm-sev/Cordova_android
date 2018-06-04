@@ -3,4 +3,18 @@
     <string name="app_name">非遗大百科</string>
     <string name="launcher_name">@string/app_name</string>
     <string name="activity_name">@string/launcher_name</string>
+
+    <string name="home">首页</string>
+    <string name="news">资讯</string>
+    <string name="wiki">百科</string>
+    <string name="activity">活动</string>
+    <string name="activition">活化馆</string>
+    <string name="sd_message">我们需要此权限来保存一些必要的数据</string>
+    <string name="setting_permission">去设置页面开启此权限</string>
+    <string name="login_title">请选择登陆方式</string>
+    <string name="login">登录</string>
+    <string name="register_phone">手机快速注册</string>
+    <string name="auto_register_msg">通过验证后自动登录</string>
+    <string name="phone_state_message">读取手机状态</string>
+
 </resources>

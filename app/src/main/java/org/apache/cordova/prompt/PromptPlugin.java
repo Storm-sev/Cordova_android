@@ -1,18 +1,17 @@
 package org.apache.cordova.prompt;
 
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.efeiyi.bigwiki.utils.ActionUtils;
-import com.efeiyi.bigwiki.utils.LogUtils;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
+
+import storm_lib.utils.LogUtils;
 
 /**
  * This class echoes a string called from JavaScript.

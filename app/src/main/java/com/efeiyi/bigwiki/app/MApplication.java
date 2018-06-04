@@ -2,11 +2,11 @@ package com.efeiyi.bigwiki.app;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
+import android.content.IntentFilter;
 
 
 import com.efeiyi.bigwiki.BuildConfig;
-import com.efeiyi.bigwiki.utils.LogUtils;
+import com.efeiyi.bigwiki.receiver.NetWorkChangeReceiver;
 import com.meituan.android.walle.WalleChannelReader;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
@@ -15,9 +15,12 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
 
-import org.apache.cordova.LOG;
+import storm_lib.utils.LogUtils;
+import storm_lib.utils.NetWorkUtils;
 
-
+/**
+ * application
+ */
 public class MApplication extends Application {
 
     public static final String TAG = MApplication.class.getSimpleName();
@@ -28,19 +31,44 @@ public class MApplication extends Application {
 
     private PushAgent mPushAgent;  // 友盟
 
+    private  NetWorkChangeReceiver netWorkChangeReceiver;
+
     @Override
     public void onCreate() {
         super.onCreate();
-
         appContext = this;
         initLog();
         initUmeng();
-
+        initNetworkInfo();
 
     }
 
+
     /**
-     *
+     * 关闭广播
+     */
+    public void closeNetWorkInfo() {
+        if (netWorkChangeReceiver != null) {
+            unregisterReceiver(netWorkChangeReceiver);
+
+        }
+
+    }
+    /**
+     * 初始化网络监听状态
+     */
+    private void initNetworkInfo() {
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+         netWorkChangeReceiver = new NetWorkChangeReceiver();
+        registerReceiver(netWorkChangeReceiver, intentFilter);
+
+    }
+
+
+    /**
+     * 初始化友盟服务
      */
     private void initUmeng() {
         // 友盟统计
@@ -54,9 +82,6 @@ public class MApplication extends Application {
 
         UMConfigure.init(this, "5afd4b20f43e4807a9000197", channel, UMConfigure.DEVICE_TYPE_PHONE,
                 "73c70b5ae640fedb5a5be029e0561257");
-
-
-
 
         mPushAgent = PushAgent.getInstance(this);
 
@@ -117,6 +142,8 @@ public class MApplication extends Application {
     public static Context getAppContext() {
         return appContext;
     }
+
+
 
 
 }

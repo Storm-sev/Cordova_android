@@ -1,16 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="baseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
+        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+
     </style>
 
-    <style name="AppTheme" parent="AppBaseTheme">
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="baseAppTheme">
+        <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/material_white</item>
+        <item name="windowActionBar">false</item>
+
+
+    </style>
+
+
+    <style name="navigatorBarStyle">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <!--<item name="android:gravity">center</item>-->
+        <!--<item name="android:padding">3dp</item>-->
+        <!--<item name="android:textSize">10sp</item>-->
+        <item name="android:button">@null</item>
+    </style>
+
+
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <item name="android:windowFullscreen">true</item>
+        <!--<item name="android:windowAnimationStyle">@style/SplashAnimation</item>-->
+        <!--消除启动时候的白屏-->
+        <!--<item name="android:windowBackground">@drawable/bg_splash</item>-->
+
+    </style>
+
+    <style name="TranslucentTheme" parent="AppTheme" />
+
+
+
+
+
+    <style name="SplashAnimation">
+    <item name="android:activityOpenEnterAnimation">@anim/splash_open</item>
     </style>
 
 

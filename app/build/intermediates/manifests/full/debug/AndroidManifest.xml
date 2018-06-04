@@ -29,8 +29,8 @@
 
     <!-- 推荐的权限 -->
     <!-- 添加如下权限，以便使用更多的第三方SDK和更精准的统计数据 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -49,21 +49,17 @@
         android:name="com.efeiyi.bigwiki.app.MApplication"
         android:debuggable="true"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/icon"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
-        android:supportsRtl="true" >
+        android:supportsRtl="true"
+        android:theme="@style/TranslucentTheme" >
         <activity
             android:name="com.efeiyi.bigwiki.MainActivity"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/activity_name"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme"
+            android:launchMode="singleTask"
+            android:theme="@style/TranslucentTheme"
             android:windowSoftInputMode="adjustResize" >
-            <intent-filter android:label="@string/launcher_name" >
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <provider
@@ -75,6 +71,19 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/camera_provider_paths" />
         </provider>
+
+        <activity
+            android:name="com.efeiyi.bigwiki.activity.SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/SplashTheme" >
+            <intent-filter android:label="@string/launcher_name" >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service android:name="com.efeiyi.bigwiki.service.DownLoadNavService" />
 
         <meta-data
             android:name="android.support.VERSION"
@@ -215,10 +224,6 @@
             android:exported="false" >
             <grant-uri-permission android:pathPattern=".*" />
         </provider>
-
-        <meta-data
-            android:name="android.arch.lifecycle.VERSION"
-            android:value="27.0.0-SNAPSHOT" />
     </application>
 
 </manifest>
