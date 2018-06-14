@@ -2,12 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.efeiyi.bigwiki"
     android:hardwareAccelerated="true"
-    android:versionCode="10000"
+    android:versionCode="1"
     android:versionName="1.0.0" >
 
     <uses-sdk
         android:minSdkVersion="19"
-        android:targetSdkVersion="26" />
+        android:targetSdkVersion="27" />
 
     <meta-data
         android:name="UMENG_APPKEY"
@@ -52,6 +52,7 @@
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:testOnly="true"
         android:theme="@style/TranslucentTheme" >
         <activity
             android:name="com.efeiyi.bigwiki.MainActivity"
@@ -59,8 +60,7 @@
             android:label="@string/activity_name"
             android:launchMode="singleTask"
             android:theme="@style/TranslucentTheme"
-            android:windowSoftInputMode="adjustResize" >
-        </activity>
+            android:windowSoftInputMode="adjustResize" />
 
         <provider
             android:name="org.apache.cordova.camera.FileProvider"
@@ -84,6 +84,19 @@
         </activity>
 
         <service android:name="com.efeiyi.bigwiki.service.DownLoadNavService" />
+
+        <activity
+            android:name="com.efeiyi.bigwiki.activity.MainHtmlActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/TranslucentTheme"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
+            android:name="com.efeiyi.bigwiki.activity.GuideShowActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/SplashTheme" >
+        </activity>
 
         <meta-data
             android:name="android.support.VERSION"

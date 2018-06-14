@@ -3,6 +3,7 @@ package storm_lib.httpclient.downLoad;
 
 
 import com.efeiyi.bigwiki.bean.IconBean;
+import com.efeiyi.bigwiki.bean.VersionBean;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
@@ -16,6 +17,10 @@ import retrofit2.http.Url;
  * 下载接口
  */
 public interface DownLoadService {
+
+
+    @GET("")
+    Observable<VersionBean> checkVersion(@Query("phone") String phone);
 
     /**
      * 更新apk

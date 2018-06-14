@@ -1,5 +1,5 @@
 
-var app = {
+var home = {
 
   initialize:function(){
     console.log("----------------------------");
@@ -15,7 +15,6 @@ var app = {
     this.receivedEvent('deviceready');
 
     // destinationType = navigator.camera.DestinationType;
-
 
   }
 
@@ -34,4 +33,4 @@ var app = {
 
 };
 
-app.initialize();
+home.initialize();

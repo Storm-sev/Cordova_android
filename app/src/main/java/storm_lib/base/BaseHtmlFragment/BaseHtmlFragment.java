@@ -3,10 +3,12 @@ package storm_lib.base.BaseHtmlFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaWebViewImpl;
 import org.apache.cordova.PluginEntry;
 import org.apache.cordova.engine.SystemWebView;
+import org.apache.cordova.engine.SystemWebViewClient;
 import org.apache.cordova.engine.SystemWebViewEngine;
 
 import java.util.ArrayList;
@@ -29,6 +32,7 @@ import java.util.prefs.BackingStoreException;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import storm_lib.utils.LogUtils;
 
 public abstract class BaseHtmlFragment extends Fragment implements CordovaInterface {
 
@@ -97,12 +101,11 @@ public abstract class BaseHtmlFragment extends Fragment implements CordovaInterf
             LayoutInflater localInflater = inflater.cloneInContext(new CordovaContext(mContext, this));
             mRootView = localInflater.inflate(attachLayoutRes(), null);
             unbinder = ButterKnife.bind(this, mRootView);
-
             mSystemWebView = mRootView.findViewById(attachWebViewIdRes());
-
+            mSystemWebView.getSettings().setUserAgentString("Android");
             mAppView = new CordovaWebViewImpl(new SystemWebViewEngine(mSystemWebView));
-
             mAppView.init(mCordovaInterfaceImpl, mXmlParser.getPluginEntries(), mPreferences);
+
 
         }
 
@@ -113,14 +116,50 @@ public abstract class BaseHtmlFragment extends Fragment implements CordovaInterf
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mAppView.loadUrl(loadWebViewUrl());
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initData();
+
+        _init();
         setUpListener();
     }
+
+    private void _init() {
+
+        // 监听页面加载完成
+        mSystemWebView.setWebViewClient(new SystemWebViewClient((SystemWebViewEngine) mAppView.getEngine()) {
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                LogUtils.d(TAG, "页面加载完成 ");
+                initData();
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                LogUtils.d(TAG,"webView onPagerStart : ");
+
+                preLoadHtmlData();
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                LogUtils.d(TAG,"webView onReceivedError : ");
+            }
+        });
+
+
+
+
+    }
+
+    protected abstract void preLoadHtmlData();
 
 
     protected abstract void setUpListener();
@@ -136,6 +175,56 @@ public abstract class BaseHtmlFragment extends Fragment implements CordovaInterf
 
 
     protected abstract int attachLayoutRes();
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (this.mAppView == null) {
+            return;
+
+        }
+
+        this.mAppView.handleStart();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (this.mAppView == null) {
+            return;
+
+        }
+
+        this.mSystemWebView.requestFocus();
+        this.mAppView.handleResume(this.keepRunning);
+
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (this.mAppView == null) {
+            return;
+
+        }
+        this.mAppView.handleStop();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (this.mAppView != null) {
+            boolean keepRunning = this.keepRunning;
+
+            this.mAppView.handlePause(keepRunning);
+
+        }
+
+    }
 
 
     @Override

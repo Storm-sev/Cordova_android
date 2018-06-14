@@ -16,6 +16,7 @@
   <!--<script type="text/javascript" src="cordova.js"></script>-->
   <!--<script type="text/javascript" src="js/home.js"></script>-->
   <script type="text/javascript" charset="utf-8" src="cordova-plugin-camera/cordova.js"></script>
+  <script type="text/javascript" charset="UTF-8" src="cordova-plugin-setting/setting.js"></script>
   <script type="text/javascript" charset="utf-8">
     var destinationType;
 
@@ -83,11 +84,13 @@
       console.log("clean cache onClean");
 
     }
+
+
   </script>
 </head>
 
 <body>
-  <div class="app">
+  <div class="home">
     <div class="div-userInfo">
       <i><img src="img/logo.png" id="smallImage"></i>
       <input onclick="capturePhoto();" class="changIcon" type="button" name="button" value="更改头像">
@@ -100,7 +103,7 @@
     <div class="div-userInfo">手机号
       <input onclick="navigator.prompt.showDialog('对话框显示','你确定,啊?')" class="changePhone" type="button" name="button" value="13838383838">
     </div>
-    <div onclick="navigator.setting.startSettingActivity()" class="div-userInfo">系统设置
+    <div onclick="navigator.setting.startSettingActivity();" class="div-userInfo">系统设置
     </div>
     <div onclick="showCache();" class="div-userInfo">清除缓存
       <p onclick="cleanCache()" id="showCache">0M</p>

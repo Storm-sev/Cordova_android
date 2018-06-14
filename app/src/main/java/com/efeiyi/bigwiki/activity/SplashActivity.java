@@ -1,36 +1,43 @@
 package com.efeiyi.bigwiki.activity;
 
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
+import android.icu.util.VersionInfo;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.MonthDisplayHelper;
-import android.view.KeyEvent;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.efeiyi.bigwiki.MainActivity;
 import com.efeiyi.bigwiki.R;
+import com.efeiyi.bigwiki.adapter.GuidePagerAdapter;
 import com.efeiyi.bigwiki.bean.IconBean;
+import com.efeiyi.bigwiki.bean.VersionBean;
+import com.efeiyi.bigwiki.receiver.NetWorkChangeReceiver;
 import com.efeiyi.bigwiki.service.DownLoadNavService;
-import com.tbruyelle.rxpermissions2.Permission;
+import com.efeiyi.bigwiki.service.UpdateService;
+import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import org.apache.cordova.PermissionHelper;
+import java.util.concurrent.TimeUnit;
 
-import java.io.FilenameFilter;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import retrofit2.http.HTTP;
-import retrofit2.http.Url;
 import storm_lib.RxHelper;
 import storm_lib.base.BaseActivity;
 import storm_lib.base.BaseObserver;
+import storm_lib.httpclient.Api;
+import storm_lib.httpclient.downLoad.DownLoadManager;
 import storm_lib.httpclient.downLoad.DownLoadService;
 import storm_lib.httpclient.manager.HttpClientManager;
 import storm_lib.utils.AppUtils;
-import storm_lib.utils.DialogHelper;
 import storm_lib.utils.LogUtils;
 import storm_lib.utils.PermissionManager;
 import storm_lib.utils.SPUtils;
@@ -43,23 +50,64 @@ public class SplashActivity extends BaseActivity {
 
     public static final String TAG = SplashActivity.class.getSimpleName();
 
+    @BindView(R.id.iv_splash)
+    ImageView ivSplash;
+    @BindView(R.id.vp_guide)
+    ViewPager vpGuide;
+
     private SPUtils navIconSPUtils;
 
+    private GuidePagerAdapter mPagerAdapter;
+
     String fileName;
+    SPUtils splashStateSP;
+
+    private static int[] guideRes = {
+
+
+    };
+
 
     @Override
     protected void setUpListener() {
+
+
+        vpGuide.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                if (position == guideRes.length - 1) {
+                    // 最后一页  跳转
+
+                } else {
+                    // 设置
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 
     @Override
     protected void init() {
+        splashStateSP = SPUtils.getINSTACE("SplashState");
         //request permission
         requestPermission();
 
         navIconSPUtils = SPUtils.getINSTACE("navIcon");
 
 //        String absolutePath = getExternalCacheDir().getAbsolutePath();
+
+//       String appVersionCode = AppUtils.getVersionCode();
 
 
     }
@@ -166,9 +214,150 @@ public class SplashActivity extends BaseActivity {
 
             return;
         }
+        toMain();
 
-        //图标检测
-        checkNavigatorBarIcon();
+//
+//        boolean isFirst = splashStateSP.getBoolean("isFirst");
+//
+//        if (!isFirst) { // 第一次进入app
+//
+//            // 显示 引导页面
+//            toGuide();
+//
+//        } else { //  非第一次进入
+//
+//            // 获取新版本状态
+//
+//            DownLoadManager.checkVersion(Api.DEVICE, new BaseObserver<VersionBean>() {
+//                @Override
+//                public void onSubscribe(Disposable d) {
+//                    super.onSubscribe(d);
+//                }
+//
+//                @Override
+//                public void onNext(VersionBean versionBean) {
+//                    super.onNext(versionBean);
+//
+//                    checkVersion(versionBean);
+//
+//
+//                }
+//
+//                @Override
+//                public void onError(Throwable e) {
+//                    super.onError(e);
+//                }
+//
+//                @Override
+//                public void onComplete() {
+//                    super.onComplete();
+//                }
+//            });
+//
+//
+//            //
+////            toMain();
+//
+//        }
+//
+//        //图标检测
+        //  checkNavigatorBarIcon();
+
+    }
+
+    /**
+     * 版本判断
+     *
+     * @param versionBean
+     */
+    private void checkVersion(VersionBean versionBean) {
+
+        int currentVersion = AppUtils.getVersionCode();
+
+        if (currentVersion < versionBean.getMinVersionCode()) {
+            // 显示必须更新
+
+
+
+        } else if (currentVersion > versionBean.getMinVersionCode() && currentVersion < versionBean.getNewVersionCode()) {
+            // 非必须更新
+            // dialog显示
+            if (UpdateService.DOWNLOAD_CODE) {
+                return ;
+            }
+            // showDialog ();
+
+            UpdateService.startDownLoadApp(this, versionBean.getApkUrl());
+
+        } else {
+
+            toMain();
+        }
+
+    }
+
+    private void toMain() {
+        Intent intent = new Intent(this, MainHtmlActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.tomain_open, R.anim.tomain_close);
+        finish();
+
+    }
+
+    private void toGuide() {
+
+        Observable.interval(1, TimeUnit.SECONDS)
+                .take(3)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<Long>() {
+
+                    Disposable mDisposable;
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        super.onSubscribe(d);
+                        this.mDisposable = d;
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        super.onNext(aLong);
+
+                        if (aLong >= 2) {
+                            if (mDisposable.isDisposed()) {
+                                mDisposable.dispose();
+
+                            }
+
+                            toGoGuideState();
+                        }
+
+                        LogUtils.d(TAG, "倒计时操作  +  " + aLong);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+                    }
+                });
+
+
+    }
+
+
+    private void toGoGuideState() {
+
+        ivSplash.setVisibility(View.GONE);
+        vpGuide.setVisibility(View.VISIBLE);
+
+        mPagerAdapter = new GuidePagerAdapter(this);
+        vpGuide.setAdapter(mPagerAdapter);
+
 
     }
 
@@ -192,7 +381,8 @@ public class SplashActivity extends BaseActivity {
 
                         if (iconBean.getCode() == 0) {
                             // 获取zip文件 还有开启服务
-                            updateOrNormalIcon(iconBean.getData().get(0).getResource_ON().getUri());
+                            // updateOrNormalIcon(iconBean.getData().get(0).getResource_ON().getUri());
+                            updateOrNormalIcon("http://diich-resource.oss-cn-beijing.aliyuncs.com/image/appNavigation/NAVBAR.zip");
                         }
                     }
 
@@ -225,17 +415,16 @@ public class SplashActivity extends BaseActivity {
         if (!navIconSPUtils.getBoolean(StringUtils.zipFileName(url))) {
 
             // 表示已经下载已经
-            if(!DownLoadNavService.LOADING_ICON_CODE) {
+            if (!DownLoadNavService.LOADING_ICON_CODE) {
                 DownLoadNavService.startLoadNavIconService(this, url);
             }
 
         }
 
 
-
         boolean newState = false;
 
-        startTOMain(newState, navIconSPUtils.getBoolean(StringUtils.zipFileName(url)),StringUtils.zipFileName(url));
+        //startTOMain(newState, navIconSPUtils.getBoolean(StringUtils.zipFileName(url)),StringUtils.zipFileName(url));
 
 
     }
@@ -281,4 +470,10 @@ public class SplashActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

@@ -27,7 +27,6 @@ public abstract class BaseCordovaActivity extends CordovaActivity {
 
         loadUrl(loadHtmlUrl());
 
-
     }
 
     /**

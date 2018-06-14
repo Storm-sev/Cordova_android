@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="wap-font-scale" content="no">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">-->
+    <title>百科首页_非遗大百科</title>
+    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../assets-wiki/css/mescroll.min.css">
+    <link rel="stylesheet" type="text/css" href="../../assets-wiki/css/ency.css">
+    <script src="../../assets-wiki/js/swiper.min.js"></script>
+    <script src="../../assets-wiki/js/vue.min.js"></script>
+    <script src="../../assets-wiki/data/category.js"></script>
+    <script src="../../assets-wiki/js/tpls.js"></script>
+</head>
+<body>
+
+<div class="ency" id="ency">
+    <wk-header :data="headData"></wk-header>
+    <!--//End 导航-->
+    <div  id="mescroll" :class="{mescroll: true, 'not-data-back': pdlist.length <= 0}">
+        <div>
+            <div class="slider" style="height: auto;">
+                <wk-swiper :swiper="focus"></wk-swiper>
+                <form>
+                    <div class="search">
+                        <div class="operation">
+                            <input class="icon" type="image" src="../../assets-wiki/images/ency/search.png" name="">
+                            <input class="keyword" type="text" name="" placeholder="请输入搜索关键词" @focus="toSearch">
+                        </div>
+                    </div>
+                </form>
+                <!--//End 表单结束-->
+            </div>
+            <!--//End 轮播图-->
+            <div class="classify">
+                <wk-category></wk-category>
+            </div>
+            <!-- <div > -->
+            <wk-ency :datas="pdlist" :recommend="true" :class="{'no-data': pdlist.length <= 0}"></wk-ency>
+            <!-- </div> -->
+        </div>
+    </div>
+    
+    <!--//End 内容-->
+    <div class="ency-footer">
+         <wk-footer :selected="selectedIndex"></wk-footer>
+    </div>
+    <!--//End 底部-->
+</div>
+<script src="../../assets-wiki/js/jquery.min.js"></script>
+<script src="../../assets-wiki/js/jquery.lazyload.js?v=1.9.1"></script>
+<script src="../../assets-wiki/js/mescroll.min.js"></script>
+<script src="../../assets-wiki/js/utils.js"></script>
+<script src="ency-model.js"></script>
+<script>
+    var app = new Vue({
+        el: '#ency',
+        data: {
+            headData: {
+                title: '百科',
+            },
+            //轮播图数据
+            focus: [],
+            selectedIndex:2,
+            mescroll: null,
+            pdlist: [],
+            total: 0,
+        },
+        components: {
+            wkHeader: wkHeader,  //导航
+            wkFooter: wkFooter,  //底部
+            wkEncy: wkEncy, // 百科列表
+            wkSwiper: wkSwiper, // 轮播图
+            wkCategory: wkCategory
+        },
+        mounted:function () {
+            var self = this;
+            self.getSwiper(); // 获取轮播图
+            self.mescroll = new MeScroll("mescroll", {
+                up: {
+                    callback: self.upCallback, //上拉回调
+                    //以下参数可删除,不配置
+                    isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
+                    //page:{size:8}, //可配置每页8条数据,默认10
+                    toTop:{ //配置回到顶部按钮
+                        src : "../../assets-wiki/images/shop/return_dii.png", //默认滚动到1000px显示,可配置offset修改
+                        //html: null, //html标签内容,默认null; 如果同时设置了src,则优先取src
+                        //offset : 1000
+                    },
+                    empty:{ //配置列表无任何数据的提示
+                        warpId:"dataList",
+                        icon: "../../assets-wiki/images/icon-no-data@2x.png",
+                        tip: "<div class=\"upwarp-nodata\"><p>暂无信息</p><p>当前没有更多信息，请稍后查询…</p></div>",
+                    },
+                }
+            });
+        },
+        updated: function() {
+            // 懒加载
+            var self = this;
+            self.$nextTick(function() {
+                $("#mescroll").trigger('scroll');
+                $("img.lazy").lazyload({
+                    placeholder: "../../assets-wiki/images/default/default.png",
+                    effect: "fadeIn",
+                    threshold :200
+                });
+            })
+        },
+        methods:{
+            getSwiper: function() {
+                var _this = this;
+                var param = {
+                    url: api.encySwiper,
+                    data: {
+                        type: 1
+                    },
+                    sCallback: function (res) {
+                        if(res.code == 0) {
+                            _this.focus = buildSwiper(res.data);
+                            // console.log("new -- >", buildSwiper(res.data))
+                            _this.$nextTick(function () {
+                                var swiper = new Swiper('.slider .swiper-container', {
+                                    pagination: '.swiper-pagination',
+                                    slidesPerView: 1,
+                                    paginationClickable: true,
+                                    // spaceBetween: 30,
+                                    loop: true
+                                });
+                                $(".swiper-slide").css("width", "100%"); // 修改宽度
+                            })
+                        }
+                    },
+                    eCallback: function (err) {
+                        errorCallback && errorCallback(err);
+                    }
+                }
+                httpRequest(param);
+            },
+
+            upCallback: function(page) {
+                var self = this;
+                var params = {
+                    objectId: 5
+                }
+                getDatas(page, params, function(curPageData) {
+                    //如果是第一页需手动制空列表 (代替clearId和clearEmptyId的配置)
+                    if(page.num == 1) self.pdlist = [];
+                    //更新列表数据
+                    self.pdlist = self.pdlist.concat(curPageData);
+                    // self.mescroll.endSuccess(curPageData.length);
+                    // curPageData = [];
+                    self.mescroll.endBySize(curPageData.length, self.total);
+                }, function(err) {
+                    //联网失败的回调,隐藏下拉刷新和上拉加载的状态;
+                    self.mescroll.endErr();
+                })
+            },
+
+            toSearch: function() {
+                mySessionStorage.setter("searchListData", null);
+                window.location.href = rootName + "/pages/search/index.html";
+            },
+
+            toDetails: function(id) {
+                console.log("id --- >", id);
+            }
+            
+        }
+    });
+</script>
+</body>
+</html>

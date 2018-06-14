@@ -11,12 +11,12 @@ public class ActionUtils {
     public static final String TAG = ActionUtils.class.getSimpleName();
 
     /**
-     *  toast
+     * toast
      */
     public static final String ACTION_SHOW_TOAST = "showToast";
 
     /**
-     *  显示 dialog
+     * 显示 dialog
      */
     public static final String ACTION_SHOW_DIALOG = "showDialog";
 
@@ -41,6 +41,23 @@ public class ActionUtils {
      * 清除缓存
      */
     public static final String ACTION_CLEAN_CACHE = "cleanCache";
+
+
+    // H5 登录成功后回调到原生
+    public static final String ACTION_LOGIN_STATE_CALLBACK = "loginStateToAndroid";
+
+
+    // 查看引导页面
+    public static final String ACTION_SHOW_Guide = "showGuidePage";
+
+    // 显示状态栏
+    public static final String ACTION_SHOW_STATUSBAR = "showStatusBar";
+
+    // 隐藏状态栏
+    public static final String ACTION_HIDE_STATUSBAR = "hideStatusBar";
+
+    // 分享
+    public static final String ACTION_SHARE = "share";
 
 }
 

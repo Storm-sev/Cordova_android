@@ -4,7 +4,7 @@
             "outputFile": "/Users/stormzhang/stormworking/workplace/BigWiki/platforms/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sq/values-sq.xml",
             "map": [
                 {
-                    "source": "/Users/stormzhang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/554c1c93050dcc3ba680b8fafa346a53/res/values-sq/values-sq.xml",
+                    "source": "/Users/stormzhang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/0fa7e898e3be65f2ffc0dd6956f4cb38/res/values-sq/values-sq.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/Users/stormzhang/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/7a025aed1d01fb6f7095e514472fbe5b/res/values-sq/values-sq.xml",
+                    "source": "/Users/stormzhang/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/f049adaab1c3a007c99e9dc553de0e96/res/values-sq/values-sq.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

@@ -1,15 +1,22 @@
 package storm_lib.httpclient.downLoad;
 
+import android.widget.SimpleCursorTreeAdapter;
+
 import com.efeiyi.bigwiki.app.MApplication;
+import com.efeiyi.bigwiki.bean.VersionBean;
 
 import java.io.File;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
+import storm_lib.base.BaseObserver;
+import storm_lib.base.BaseSubscriber;
 import storm_lib.httpclient.manager.HttpClientManager;
 import storm_lib.utils.SPUtils;
 
@@ -20,6 +27,21 @@ public class DownLoadManager {
 
     public static final String TAG = DownLoadManager.class.getSimpleName();
 
+    /**
+     * 版本检测
+     *
+     * @param phone
+     */
+    public static void checkVersion(String phone, BaseObserver<VersionBean> observer) {
+
+
+        Observable<VersionBean> versionBeanObservable =
+                HttpClientManager.getDownLoadService(false).checkVersion(phone);
+
+        versionBeanObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
 
     /**
      * 更新apk
@@ -125,7 +147,6 @@ public class DownLoadManager {
                 }
 
 
-
                 @Override
                 public void onProgress(float progress, long total) {
 
@@ -137,8 +158,6 @@ public class DownLoadManager {
 
 
     }
-
-
 
 
 }

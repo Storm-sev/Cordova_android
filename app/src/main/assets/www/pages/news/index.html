@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../../assets-wiki/js/flexible.min.js"></script>
+    <title>活动首页</title>
+    <link rel="stylesheet" href="../../assets-wiki/css/information.css">
+</head>
+<body>
+<div id="information" class="information news">
+    <wk-header :data="self.head"></wk-header>
+
+    <template v-show="!is.loading">
+        <article class="container">
+            <menu-bar :data="self.menu" @send="receiveChannelId" id="nav"></menu-bar>
+            <!--//End-->
+            <tool-tip @send="receiveTip" :data="is.toolTip" ref="tip"></tool-tip>
+            <!--//End-->
+
+            <div class="list mescroll" :class="{style1: hasNoToolTip, style2:hasNoSlider}" id="mescroll">
+                <div class="slider" v-show="isSlider">
+                    <wk-swiper :swiper="self.slider" id="swiper1"></wk-swiper>
+                </div>
+                <news-item :data="self.list"></news-item>
+                <div id="dataList" class="no-data" v-show="!self.list.length"></div>
+            </div>
+            <!--//End-->
+        </article>
+
+        <wk-footer :selected="selectedIndex"></wk-footer>
+        <!--//End 底部-->
+    </template>
+
+    <Loading :msg="is.loading"></Loading>
+    <!--<div class="loading" v-show="is.loading"><img src="/assets-wiki/images/loading.gif" alt=""></div>-->
+</div>
+
+
+<script src="../../assets-wiki/js/system.js"></script>
+<script src="../../assets-wiki/js/swiper.min.js"></script>
+<script src="../../assets-wiki/js/mescroll.min.js"></script>
+<script src="../../assets-wiki/js/jquery.lazyload.js"></script>
+<script src="../../assets-wiki/js/utils.js"></script>
+<script src="../../assets-wiki/js/tpls.js"></script>
+<script src="../../assets-wiki/js/jx/jx-tpls.js"></script>
+<script src="../../assets-wiki/js/jx/information.js"></script>
+<script>
+    var app = new Vue({
+        el: '#information',
+        data: {
+            self: {
+                head: {
+                    title: '资讯'
+                },
+                menu: [
+                    {id: 0, name: '推荐', href: rootName + '/pages/news/index.html?channelId=0'},
+                    {id: 1, name: '权威发布', href: rootName + '/pages/news/index.html?channelId=1'},
+                    {id: 2, name: '资讯', href: rootName + '/pages/news/index.html?channelId=2'},
+                    {id: 3, name: '观察', href: rootName + '/pages/news/index.html?channelId=3'},
+                    {id: 4, name: '人物', href: rootName + '/pages/news/index.html?channelId=4'},
+                    {id: 5, name: '视觉', href: rootName + '/pages/news/index.html?channelId=5'},
+                    {id: 6, name: '专题', href: rootName + '/pages/news/index.html?channelId=6'},
+                    {id: 7, name: '我说', href: rootName + '/pages/news/index.html?channelId=7'}
+                ],
+                slider: [],
+                list: []
+            },
+            is: {
+                toolTip: Boolean,  //登录提示条
+                slider: true,
+                loading: true
+            },
+            receive: {
+                channelId: 0,  //频道id
+                page: {}
+            },
+            add: {
+                noData: false,
+                noToolTip: false
+            },
+            selectedIndex: 1,
+        },
+        components: {
+            wkHeader, //导航
+            menuBar, //导航
+            wkFooter, //底部
+            toolTip, //底部
+            newsItem, //活动列表
+            wkSwiper, //轮播图
+            Loading: shopLoad
+        },
+        computed: {
+            hasNoToolTip() {
+                return !this.is.toolTip
+            },
+            hasNoSlider() {
+
+            },
+            isSlider() {
+                return getHttpParam('channelId') == 0 ? true : false
+            }
+        },
+        methods: {
+            initMescroll: function () {
+                //子频道
+                var nevSwiper = new Swiper('#nav', {
+                    freeMode: true,
+                    slidesPerView: 'auto',
+                    freeModeSticky: true
+                })
+                this._getSlider()
+                initMescroll(this, (res) => {
+                    this.upCallback(res)
+                })
+            },
+            upCallback: function (page) {
+                var params = {
+                    type: 0, //资讯
+                    current: page.num,//条数/页
+                    pageSize: page.size, //页数
+                    channelId: getHttpParam('channelId'),
+                }
+                getNewsIndex(params, (res, total) => {
+                    var data = []
+                    for (var i = 0; i < res.length; i++) {
+                        if (res[i].source && res[i].source.length > 10) {
+                            res[i].source = res[i].source.slice(0, 10) + '...'
+                        }
+                        if(res[i].imgUrls.length){
+                            for (var j = 0; j < res[i].imgUrls.length; j++) {
+                                res[i].imgUrls[j] = res[i].imgUrls[j] + '?x-oss-process=style/information-list'
+                            }
+                        }
+
+                    }
+                    data.push(res)
+                    //如果是第一页需手动制空列表
+                    if (page.num == 1) this.self.list = []
+                    this.receive.page = page
+                    //更新列表数据
+                    this.self.list = this.self.list.concat(data[0]);
+                    this.mescroll.endBySize(data[0].length, total)
+                    //没有数据添加class
+                    this.add.noData = !data[0].length ? true : false
+                    this.is.loading = false
+                })
+            },
+            //获取轮播图
+            _getSlider: function () {
+                var params = {
+                    objectId: 3,
+                    currPage: 1,
+                    pageSize: 5
+                }
+                getSlider(params, (res) => {
+                    this.self.slider = res
+                    this.$nextTick(function () {
+                        let mySwiper = new Swiper('#swiper1', {
+                            autoplay: 5000,//可选选项，自动滑动
+                            pagination: '.swiper-pagination',
+                            loop: true
+                        })
+                    })
+                })
+            },
+            //频道传递过来的数据
+            receiveChannelId: function (id) {
+                this.is.loading = true
+                this.receive.channelId = getHttpParam('channelId')
+                this.self.list = []
+
+                this.upCallback(this.receive.page, (res) => {
+                    this.is.loading = false
+                })
+            },
+            //登录提示条传递过来的数据
+            receiveTip: function (res) {
+                this.is.toolTip = false
+            }
+        },
+        mounted: function () {
+            document.title = '资讯' + '_非遗大百科'
+            this.initMescroll()
+            if (getHttpParam('channelId') > 0 || myLocalStorage.getter('__closeTip__')) {
+                this.is.toolTip = false
+            }
+        },
+        updated() {
+            this.$nextTick(() => {
+                $("#mescroll").trigger('scroll');
+                $("img.lazy").lazyload({
+                    placeholder: "../../assets-wiki/images/default/default.png",
+                    effect: "fadeIn",
+                    threshold: 200
+                });
+            })
+        }
+    })
+</script>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cspan id='cnzz_stat_icon_1273697800'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1273697800%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+</body>
+</html>

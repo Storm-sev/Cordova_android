@@ -80,6 +80,8 @@ public class MApplication extends Application {
         String channel = WalleChannelReader.getChannel(this);
         LogUtils.d(TAG, "获取的渠道信息" + channel);
 
+        channel = "storm";
+
         UMConfigure.init(this, "5afd4b20f43e4807a9000197", channel, UMConfigure.DEVICE_TYPE_PHONE,
                 "73c70b5ae640fedb5a5be029e0561257");
 

@@ -2,6 +2,8 @@ package storm_lib.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 
 import com.efeiyi.bigwiki.app.MApplication;
@@ -24,8 +26,11 @@ public class AppUtils {
     }
 
 
-
-
+    /**
+     * install app
+     * @param context
+     * @param file
+     */
     public static void installApk(Context context, File file) {
         Intent intent = new Intent();
 
@@ -36,5 +41,27 @@ public class AppUtils {
         context.getApplicationContext().startActivity(intent);
 
     }
+
+    /**
+     * 获取当前应用的版本号
+     * @return
+     */
+    public static int getVersionCode(){
+        PackageManager packageManager = MApplication.getAppContext().getPackageManager();
+
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(MApplication.getAppContext().getPackageName(), 0);
+            LogUtils.d(TAG, packageInfo.versionCode);
+
+            return packageInfo.versionCode ;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+
+
 
 }
